@@ -19,6 +19,4 @@ app.get("/", (req, res) => {
   res.send('App is working')
 });
 
-app.listen(3001, '192.168.232.105',() => {
-  console.log("run");
-});
+app.listen(3001);
