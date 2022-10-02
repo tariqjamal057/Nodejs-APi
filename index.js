@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors')
 const mysql = require("mysql2");
+require('dotenv').config()
 
 const db = mysql.createConnection({
     host: 'bo6j9vxbokcmj3tmsd2e-mysql.services.clever-cloud.com',
@@ -43,6 +44,6 @@ app.post("/login",(req,res)=> {
   })
 });
 
-app.listen(3001,()=> {
-  console.log("Server running at 3001");
+app.listen(process.env.PORT || 5000,()=> {
+  console.log(`Server running at ${process.env.PORT}`);
 });
