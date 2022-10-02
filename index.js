@@ -1,12 +1,15 @@
 const express = require("express");
-// const userRoute = require("./routes/user.route");
-// const actRoute = require("./routes/act.route");
-// const complaintRoute = require("./routes/complaint.route");
-// const hrdRoute = require("./routes/hrd.routes");
 const cors = require('cors')
-const db = require("./config/database");
-const jwt = require("jsonwebtoken");
-const token = require("./middleware/token.middleware");
+const mysql = require("mysql2");
+
+const db = mysql.createConnection({
+    host: 'bo6j9vxbokcmj3tmsd2e-mysql.services.clever-cloud.com',
+    user: 'uhy07diumnxfr5s4',
+    database: 'bo6j9vxbokcmj3tmsd2e',
+    password: '9Zg9tFffPWeZsu0B2M1s',
+    port: '3306'
+});
+db.connect();
 
 const app = express();
 app.use(express.json());
@@ -15,13 +18,6 @@ app.use(cors({
   origin: "*"
 }))
 
-// app.set("view-engine", "ejs");
-// app.use(express.urlencoded({ extended: false }));
-
-// app.use("/auth", userRoute);
-// app.use("/act", actRoute);
-// app.use("/complaint", complaintRoute);
-// app.use("/hrd", hrdRoute);
 
 app.get("/", (req, res) => {
   res.send('App is working')
@@ -39,19 +35,8 @@ app.post("/login",(req,res)=> {
       });
     }
     if (result.length) {
-      const token = jwt.sign(
-        {
-          username: result.username,
-          id: result.id,
-        },
-        "hello",
-        {
-          expiresIn: "1d",
-        }
-      );
       return res.status(200).send({
         message: "Loggedin",
-        token,
         data: result,
       });
     }
